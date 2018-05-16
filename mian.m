@@ -1,7 +1,7 @@
 % main
 
-fn='btgh';
-is_soprano = 1;
+fn='04'; % INPUT YOUR SONG NAME HERE
+is_soprano = 0;
 hparams;
 
 %% from wavefile to res matrix
@@ -50,7 +50,7 @@ nx=sx(1);
 tmax=sx(2)+1;
 x=[zeros(nx,1),x];
 
-load('pitch_lstm.mat');
+load('pitch_lstm_444.mat');
 sWhy=size(Why);
 d=sWhy(2);
 ny=sWhy(1);
@@ -160,11 +160,14 @@ for i=1:N
     q=floor(bias+L*i);
     ys(:,i)=mean(yr(:,p:q),2);
 end
-[~,notes]=max(ys,[],1);
-notes(notes==1)=nan;
-notes=notes+(n0-2);
+% [~,notes]=max(ys,[],1);
+% notes(notes==1)=nan;
+% notes=notes+(n0-2);
+[~,notes]=max(ys(2:end,:),[],1);
+notes=notes+(n0-1);
 if (is_soprano)
     notes=notes+12;
 end
 plot(notes,'o-');
 save([fn,'_notes.mat'],'notes','beat');
+

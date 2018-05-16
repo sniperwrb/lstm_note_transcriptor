@@ -1,7 +1,7 @@
 %lstm trainer along with dev
 
 itermax=10;
-tot_length=1000; %1000;
+tot_length=1033; %1000;
 %initialize params
 %bsize=1;
 
@@ -13,9 +13,11 @@ d=100; %hidden size
 alp=1; %sigmoid alpha
 issoftmax=0;
 islogloss=0;
-nx=86;
-ny=44;
+nx=106;
+ny=48;
 load names
+load names1
+names=[names;names1];
 
 %initialize network
 W=randn(4*d,nx+d)*(1/d);
@@ -31,10 +33,10 @@ Why=randn(ny,d)*(1/d);
 mW=zeros(size(W));
 mWhy=zeros(size(Why));
 
-trains=1:2:tot_length; % 1:2:1000 for train-dev
+trains=1:tot_length; % 1:2:1000 for train-dev
 ltrain=length(trains);
-devs=2:2:tot_length;
-ldev=length(trains);
+devs=1:10:1000;
+ldev=length(devs);
 %se=zeros(itermax*length(trains),1);
 
 se_train=zeros(ltrain,1);
@@ -51,8 +53,8 @@ for iter=1:itermax
     for dataid=1:ltrain
         %lr=lr_0*min(1400/en,en/1400);
         %initialize input
-        load(['mirres/',names{perm(dataid)},'.mat']);
-        load(['mirpv/',names{perm(dataid)},'.mat']);
+        load(['D:\atlas\pitch\mirres\',names{perm(dataid)},'.mat']);
+        load(['D:\atlas\pitch\mirpv\',names{perm(dataid)},'.mat']);
         sres=size(allres);
         spv=size(pv);
         % nx=sres(1);
@@ -214,8 +216,8 @@ for iter=1:itermax
     en=0;
     for dataid=1:ldev
         %initialize input
-        load(['mirres/',names{perm(dataid)},'.mat']);
-        load(['mirpv/',names{perm(dataid)},'.mat']);
+        load(['D:\atlas\pitch\mirres\',names{perm(dataid)},'.mat']);
+        load(['D:\atlas\pitch\mirpv\',names{perm(dataid)},'.mat']);
         sres=size(allres);
         spv=size(pv);
         % nx=sres(1);

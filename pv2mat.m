@@ -1,12 +1,12 @@
 load names
-n1=35;
-n2=77;
+n1=38;
+n2=84;
 for i=1:1000
     x=load(['D:\MIR-1K\PitchLabel\',names{i},'.pv']);
     l=length(x);
     pv=zeros(n2-n1+2,l);
     for j=1:l
-        if (x(j)==0)
+        if (x(j)<n1)
             pv(1,j)=1;
         else
             % pv(j,round(x(j))-n1+2)=1;
